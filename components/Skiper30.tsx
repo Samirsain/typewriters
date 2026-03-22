@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import Lenis from "lenis";
 import { useEffect, useRef, useState } from "react";
 
@@ -32,24 +33,31 @@ const Skiper30 = () => {
   const y4 = useTransform(scrollYProgress, [0, 1], [0, height * 3]);
 
   useEffect(() => {
-    const lenis = new Lenis();
+    const isMobile = window.innerWidth < 768;
+    let lenis: Lenis | null = null;
+    let rafId: number | null = null;
 
-    const raf = (time: number) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
+    // Lenis fights native touch scroll on mobile — only enable on desktop
+    if (!isMobile) {
+      lenis = new Lenis();
+      const raf = (time: number) => {
+        lenis!.raf(time);
+        rafId = requestAnimationFrame(raf);
+      };
+      rafId = requestAnimationFrame(raf);
+    }
 
     const resize = () => {
       setDimension({ width: window.innerWidth, height: window.innerHeight });
     };
 
     window.addEventListener("resize", resize);
-    requestAnimationFrame(raf);
     resize();
 
     return () => {
       window.removeEventListener("resize", resize);
-      lenis.destroy();
+      if (lenis) lenis.destroy();
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -91,10 +99,13 @@ const Column = ({ images, y }: ColumnProps) => {
     <motion.div className="gallery-column" style={{ y }}>
       {images.map((src, i) => (
         <div key={i} className="gallery-image-wrapper">
-          <img
-            src={`${src}`}
-            alt="gallery image"
+          <Image
+            src={src}
+            alt={`Gallery image ${i + 1}`}
+            fill
+            sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 25vw"
             className="gallery-image"
+            loading="lazy"
           />
         </div>
       ))}

@@ -44,7 +44,7 @@ export default function ComingSoonBanner() {
         }}
       />
       
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
         <div className="fade-banner-item inline-flex items-center gap-2 border border-gold-400/30 rounded-full px-4 py-1.5 mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
           <span className="font-body text-xs text-cream-300 tracking-widest uppercase">

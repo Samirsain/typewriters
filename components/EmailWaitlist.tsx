@@ -20,7 +20,7 @@ export default function EmailWaitlist() {
 
   return (
     <section id="waitlist" className="py-24 bg-cream-100 relative overflow-hidden">
-      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center">
         <h2 className="fade-waitlist-item font-display text-[clamp(2rem,4vw,3.5rem)] font-light text-brown-800 leading-tight">
           Subscribe to <em className="font-script not-italic text-brown-500">our emails</em>
         </h2>

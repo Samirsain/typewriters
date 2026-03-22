@@ -35,22 +35,22 @@ export default function Gallery() {
     : paintings.filter((p) => p.category === activeTheme);
 
   return (
-    <section id="shop" className="py-24 bg-cream-100">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section id="shop" className="py-16 sm:py-24 bg-cream-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <span className="font-body text-xs text-brown-400 uppercase tracking-[0.3em]">Art of the Month</span>
-          <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-light text-brown-800 leading-tight mt-2 uppercase tracking-wide">
+          <h2 className="font-display text-[clamp(1.75rem,4vw,3rem)] font-light text-brown-800 leading-tight mt-2 uppercase tracking-wide">
             Latest <em className="font-script not-italic text-brown-500 lowercase">Collection</em>
           </h2>
 
-          {/* Theme chips */}
-          <div className="flex justify-center flex-wrap gap-2 mt-8">
+          {/* Theme chips — horizontally scrollable on mobile */}
+          <div className="flex sm:justify-center gap-2 mt-6 sm:mt-8 overflow-x-auto scrollbar-none pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
             {THEMES.slice(0, 6).map((theme) => (
               <button
                 key={theme}
                 onClick={() => setActiveTheme(theme)}
-                className={`font-body text-[10px] uppercase tracking-widest px-5 py-2 rounded-full border transition-all duration-300 ${
+                className={`font-body text-[10px] uppercase tracking-widest px-4 sm:px-5 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
                   activeTheme === theme
                     ? "bg-brown-800 text-cream-50 border-brown-800"
                     : "border-brown-200 text-brown-500 hover:border-brown-400"
@@ -63,14 +63,14 @@ export default function Gallery() {
         </div>
 
         {/* Product Grid — Canvas box style */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-16">
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 sm:gap-x-8 gap-y-10 sm:gap-y-16">
           {filtered.map((painting) => (
             <div
               key={painting.id}
               className="painting-card group cursor-pointer"
             >
               {/* 3D Canvas Box */}
-              <div className="canvas-box mb-8">
+              <div className="canvas-box mb-6 sm:mb-8">
                 <div className="canvas-box-inner">
                   {/* Front face — the image */}
                   <div className="canvas-front">
@@ -78,6 +78,7 @@ export default function Gallery() {
                       src={painting.img}
                       alt={painting.title}
                       fill
+                      sizes="(max-width: 475px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover"
                     />
                   </div>

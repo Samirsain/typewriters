@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -13,6 +13,26 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
+  // Close on Escape key
+  const handleEscape = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") setMenuOpen(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [handleEscape]);
 
   const links = ["Shop", "About", "Books", "Wishlist ❤︎"];
 
@@ -90,9 +110,13 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div className="md:hidden bg-cream-100/95 backdrop-blur-md border-t border-brown-200/40 px-6 py-8 flex flex-col gap-6 min-h-[60vh]">
+        {/* Mobile menu — slide down animation */}
+        <div
+          className={`md:hidden bg-cream-100/95 backdrop-blur-md border-t border-brown-200/40 overflow-hidden transition-all duration-300 ease-in-out ${
+            menuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="px-6 py-8 flex flex-col gap-6">
             {links.map((link) => (
               <Link
                 key={link}
@@ -108,7 +132,7 @@ export default function Navbar() {
                <Link href="#cart" className="text-brown-700 font-body text-sm" onClick={() => setMenuOpen(false)}>Cart (0)</Link>
             </div>
           </div>
-        )}
+        </div>
       </nav>
     </>
   );

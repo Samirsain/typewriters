@@ -33,6 +33,12 @@
     ::-webkit-scrollbar-track { @apply bg-cream-200; }
     ::-webkit-scrollbar-thumb { @apply bg-brown-400 rounded-full; }
   }
+
+  /* Mobile touch optimizations */
+  a, button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
 }
 
 @layer utilities {
@@ -229,6 +235,8 @@
       height: 120vh;
       gap: 3vw;
       padding: 3vw;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     .gallery-column {
@@ -246,6 +254,23 @@
 
     .scroll-hint {
       font-size: 0.6rem;
+    }
+
+    /* Simplify 3D canvas on mobile for performance */
+    .canvas-box-inner {
+      transform: none;
+    }
+    .canvas-box:hover .canvas-box-inner {
+      transform: translateY(-4px);
+    }
+    .canvas-side-right {
+      display: none;
+    }
+    .canvas-side-bottom {
+      display: none;
+    }
+    .canvas-box::after {
+      display: none;
     }
   }
 
