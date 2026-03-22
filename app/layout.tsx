@@ -4,6 +4,7 @@ import "./globals.css";
 import GSAPProvider from "@/components/gsap/GSAPProvider";
 import PageTransitionProvider from "@/components/PageTransitionProvider";
 import { generateSEO } from "@/lib/seo";
+import { Analytics } from "@vercel/analytics/react";
 
 // ─── Fonts — display:swap prevents FOUT ──────────────────────
 const cormorant = Cormorant_Garamond({
@@ -50,6 +51,7 @@ export default function RootLayout({
             {children}
           </PageTransitionProvider>
         </GSAPProvider>
+        <Analytics />
       </body>
     </html>
   );
